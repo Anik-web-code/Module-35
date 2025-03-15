@@ -25,19 +25,18 @@ const loadCategoryVideos = (id) => {
     url = `https://openapi.programming-hero.com/api/phero-tube/category/${id}`;
     fetch(url)
       .then((res) => res.json())
-        .then((data) => {
-            const clicked = document.getElementById(`btn-${id}`);
-            clicked.classList.add("active");
-            showVideos(data.category)
-        });
+      .then((data) => {
+        const clicked = document.getElementById(`btn-${id}`);
+        clicked.classList.add("active");
+        showVideos(data.category);
+      });
   }
 };
 
 const loadVideos = () => {
   fetch("https://openapi.programming-hero.com/api/phero-tube/videos")
     .then((res) => res.json())
-      .then((data) => showVideos(data.videos)
-      );
+    .then((data) => showVideos(data.videos));
 };
 
 const showVideos = (cards) => {
@@ -72,6 +71,9 @@ const showVideos = (cards) => {
 <div class="ml-20 pb-3">
 ${card.others.views} views
 </div>
+<button onclick=loadDetails('${
+      card.video_id
+    }') class="btn btn-block bg-red-500 text-[#FFFFFF]">Show Details</button>
   </div>
 
         `;
@@ -86,7 +88,7 @@ const loadError = () => {
   sorry.innerHTML = `
       <div class="flex justify-center items-center">
         <div class="text-center">
-          <img src="icon.png" class="mx-auto" alt="Error Icon">
+          <img src="icon.png" class="my-5 " alt="Error Icon">
           <h1 class="text-3xl mt-4 font-bold">Oops!! Sorry, There is no<br> content here</h1>
         </div>
       </div>
@@ -97,4 +99,21 @@ const loadError = () => {
   sorry.style.transform = "translate(-50%, -50%)"; // Adjust by 50% to center exactly
 
   videoContainer.appendChild(sorry);
+};
+
+const loadDetails = (details) => {
+  url = `https://openapi.programming-hero.com/api/phero-tube/video/${details}`;
+  fetch(url)
+    .then((res) => res.json())
+    .then((data) => showDetails(data.video));
+};
+
+const showDetails = (details) => {
+  document.getElementById("my_modal").showModal();
+  const modalContainer = document.getElementById("modal_container");
+  modalContainer.innerHTML = `
+  <h1 class="text-xl font-bold mb-3">Title:${details.title}</h1>
+  <h1 class="text-lg font-semibold mb-3">Author:${details.authors[0].profile_name}</h1>
+  <p class="text-justify text-red-600 mb-3">Description: ${details.description}</p>
+  `;
 };
