@@ -19,6 +19,11 @@
         font-weight: 400;
         font-style: normal;
       }
+
+      .active {
+        background-color: red;
+        color: #ffffff;
+      }
     </style>
   </head>
   <body class="inter">
@@ -43,7 +48,9 @@
     </header>
     <main>
       <div id="category-container" class="flex gap-8 justify-center">
-        <button class="btn bg-red-500 text-[#FFFFFF]">All</button>
+        <button onclick="loadVideos()" class="btn bg-red-500 text-[#FFFFFF]">
+          All
+        </button>
       </div>
       <div
         id="main"
